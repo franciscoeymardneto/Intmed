@@ -1,3 +1,5 @@
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -5,19 +7,31 @@ from rest_framework.response import Response
 from ..serializers import UserRegistrationSerializer
 
 
+@swagger_auto_schema(
+    operation_description="Cria um novo usuário com acesso ao admin, \
+        mas sem privilégios de superadmin.",
+    method="post",
+    request_body=openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            "username": openapi.Schema(type=openapi.TYPE_STRING),
+            "email": openapi.Schema(
+                type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL
+            ),
+            "password": openapi.Schema(type=openapi.TYPE_STRING),
+            "password2": openapi.Schema(type=openapi.TYPE_STRING),
+        },
+        required=["username", "email", "password", "password2"],
+        example={
+            "username": "newuser",
+            "email": "newuser@example.com",
+            "password": "password123",
+            "password2": "password123",
+        },
+    ),
+)
 @api_view(["POST"])
 def createUser(request):
-    """
-    Cria um novo usuário com acesso ao admin, mas sem privilégios de superadmin.
-
-    Exemplo de corpo da solicitação:
-    {
-        "username": "newuser",
-        "email": "newuser@example.com",
-        "password": "password123",
-        "password2": "password123"
-    }
-    """
     serializer = UserRegistrationSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
