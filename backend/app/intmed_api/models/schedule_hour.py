@@ -3,7 +3,7 @@ from django.db import models
 from .schedule import Schedule
 
 
-class ScheduleDay(models.Model):
+class ScheduleHour(models.Model):
     id: int = models.AutoField(primary_key=True)
     schedule = models.ForeignKey(
         Schedule, on_delete=models.CASCADE, related_name="schedules-hours", null=False
