@@ -6,7 +6,7 @@ from .schedule import Schedule
 class ScheduleHour(models.Model):
     id: int = models.AutoField(primary_key=True)
     schedule = models.ForeignKey(
-        Schedule, on_delete=models.CASCADE, related_name="schedules-hours", null=False
+        Schedule, on_delete=models.CASCADE, related_name="schedules_hours", null=False
     )
     hour: models.TimeField = models.TimeField()
     isReserved: bool = models.BooleanField(default=False)
