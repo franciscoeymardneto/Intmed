@@ -9,7 +9,7 @@ from .doctor import Doctor
 
 class Schedule(models.Model):
     id: int = models.AutoField(primary_key=True)
-    doctor: Doctor = models.ForeignKey(
+    doctor = models.ForeignKey(
         Doctor, on_delete=models.CASCADE, related_name="schedules", null=False
     )
     day: date = models.DateField()
