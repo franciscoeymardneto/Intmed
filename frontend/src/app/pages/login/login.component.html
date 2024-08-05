@@ -6,17 +6,15 @@
     <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
       <div class="fields-container">
         <mat-form-field appearance="outline">
-          <mat-label>Nome de usuário</mat-label>
-          <input matInput type="text" formControlName="username" required>
+          <input matInput type="email" placeholder="Email" formControlName="username" required>
           <mat-error *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
-            Nome de usuário é obrigatório.
+            Email inválido
           </mat-error>
         </mat-form-field>
         <mat-form-field appearance="outline">
-          <mat-label>Senha</mat-label>
-          <input matInput type="password" formControlName="password" required>
+          <input matInput type="password" placeholder="Senha" formControlName="password" required>
           <mat-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-            Senha é obrigatória.
+            Senha inválida
           </mat-error>
         </mat-form-field>
         <mat-checkbox color="primary" formControlName="rememberMe">Lembrar minha senha</mat-checkbox>
