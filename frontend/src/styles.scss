@@ -1,6 +1,20 @@
 @use 'sass:map';
 @use '@angular/material' as mat;
 
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/Roboto/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url('/fonts/Roboto/Roboto-Bold.ttf') format('truetype');
+}
+
 @include mat.core();
 
 $_palettes: (
@@ -50,6 +64,7 @@ $frontend-theme: mat.define-theme((color: (theme-type: light,
 html,
 body {
   height: 100%;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
