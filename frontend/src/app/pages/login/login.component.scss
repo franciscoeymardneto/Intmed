@@ -1,0 +1,40 @@
+.login-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 0 16px;
+}
+
+.login-container{
+  min-height: 16rem;
+  max-width: 25rem;
+  width: 100%;
+
+  header {
+    margin-bottom: 2.5rem;
+  }
+
+  form{
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}
+
+.fields-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-footer {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+
+  button {
+    width: 180px;
+    border-radius: 8px;
+  }
+}
+
