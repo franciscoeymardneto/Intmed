@@ -29,9 +29,9 @@ export class RegisterComponent {
   constructor(private fb: FormBuilder, private router: Router) {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      passwordConfirm: ['', Validators.required]
+      passwordConfirm: ['']
     });
   }
 
@@ -39,8 +39,18 @@ export class RegisterComponent {
     this.router.navigate(['/login'])
   }
 
+  passwordsMatches(){
+    if (this.registerForm.value['passwordConfirm'] !== this.registerForm.value['password']){
+      this.registerForm.get('passwordConfirm')!.setErrors({ invalid: true })
+      return false
+    }
+    return true
+  }
+
   onRegister() {
-    if (this.registerForm.valid) {
+
+
+    if (this.registerForm.valid && this.passwordsMatches()) {
       const { username, password} = this.registerForm.value;
        console.log({ username, password});
     } else {
