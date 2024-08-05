@@ -1,4 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'sass:map';
+@use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@include mat.core();
+
+$_palettes: (
+  primary: (
+    0: #000000,
+    10: #0E282A,
+    20: #1D5054,
+    25: #27686D,
+    30: #319086,
+    35: #3BA8A0,
+    40: #49B4BB,
+    50: #49B4BB,
+    60: #5FC5C6,
+    70: #75D5D2,
+    80: #8BE6DD,
+    90: #A1F6E8,
+    95: #CFFBFA,
+    98: #E7FEFF,
+    99: #F3FFFF,
+    100: #FFFFFF,
+  )
+);
+
+$_rest: (
+  secondary: map.get(mat.$azure-palette, secondary),
+  neutral: map.get(mat.$azure-palette, neutral),
+  neutral-variant: map.get(mat.$azure-palette, neutral-variant),
+  error: map.get(mat.$azure-palette, error),
+);
+$_primary: map.merge(map.get($_palettes, primary), $_rest);
+
+$frontend-theme: mat.define-theme((color: (theme-type: light,
+        primary: $_primary,
+        tertiary: mat.$blue-palette ),
+      density: (scale: 0,
+      )));
+
+:root {
+  @include mat.all-component-themes($frontend-theme);
+}
+
+
+:root {
+  --primary: #49B4BB
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
