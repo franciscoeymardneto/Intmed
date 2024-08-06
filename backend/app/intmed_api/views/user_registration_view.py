@@ -14,16 +14,16 @@ from ..serializers import UserRegistrationSerializer
     request_body=openapi.Schema(
         type=openapi.TYPE_OBJECT,
         properties={
-            "username": openapi.Schema(type=openapi.TYPE_STRING),
+            "first_name": openapi.Schema(type=openapi.TYPE_STRING),
             "email": openapi.Schema(
                 type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL
             ),
             "password": openapi.Schema(type=openapi.TYPE_STRING),
             "password2": openapi.Schema(type=openapi.TYPE_STRING),
         },
-        required=["username", "email", "password", "password2"],
+        required=["first_name", "email", "password", "password2"],
         example={
-            "username": "newuser",
+            "first_name": "Jhon Due",
             "email": "newuser@example.com",
             "password": "password123",
             "password2": "password123",
