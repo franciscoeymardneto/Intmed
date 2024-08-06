@@ -7,7 +7,8 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule  } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { AuthService } from '../../core/services/auth.service';
+import { HttpClient, provideHttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -19,7 +20,7 @@ import { Router } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatCheckbox
+    MatCheckbox,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -27,7 +28,11 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   loginForm!: FormGroup
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
@@ -39,7 +44,14 @@ export class LoginComponent {
 
     if (this.loginForm.valid) {
       const { username, password, rememberMe } = this.loginForm.value;
-       console.log({ username, password, rememberMe });
+
+      this.authService.login(username,password).subscribe(success => {
+        if (success) {
+          this.router.navigate(['/main']);
+        } else {
+          alert('Erro ao fazer login')
+        }
+      })
     } else {
       this.loginForm.markAllAsTouched()
     }
