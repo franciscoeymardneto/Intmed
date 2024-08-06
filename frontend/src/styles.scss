@@ -56,13 +56,20 @@ $frontend-theme: mat.define-theme((color: (theme-type: light,
   @include mat.all-component-themes($frontend-theme);
 }
 
-html,
-body {
+html, body {
   height: 100%;
-}
-
-body {
   margin: 0;
-  padding: 24px 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+
+  app-root{
+    flex: 1;
+  }
 }
