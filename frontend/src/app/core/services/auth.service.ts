@@ -8,7 +8,7 @@ import { BrowserStorageService } from './storage.service';
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpService, private localStorage: BrowserStorageService) {
+  constructor(private http: HttpService, private storage: BrowserStorageService) {
   }
 
   login(username: string, password: string): Observable<boolean> {
@@ -17,7 +17,7 @@ export class AuthService {
       password
     }).pipe(
       map( response => {
-        this.localStorage.set('user', JSON.stringify({ username, token: response.token }));
+        this.storage.setUserSession({ username, token: response.token });
         return true
       }),
       catchError(error => {
@@ -28,10 +28,10 @@ export class AuthService {
   }
 
   logout(): void {
-    this.localStorage.remove('user');
+    this.storage.clearSession();
   }
 
   isLoggedIn(): boolean {
-    return this.localStorage.get('user') !== null;
+    return this.storage.getUserSession() !== null;
   }
 }
