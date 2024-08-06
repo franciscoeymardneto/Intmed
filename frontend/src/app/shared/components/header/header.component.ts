@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { BrowserStorageService } from '../../../core/services/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -10,8 +11,11 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   readonly username: string = 'Karla Burrito'
-  constructor( private router: Router) {}
+  constructor( private router: Router, private storage: BrowserStorageService) {
+    this.username = this.storage.getUserSession()?.username
+  }
   logout() {
+    this.storage.clearSession()
     this.router.navigate(['/login'])
   }
 }
