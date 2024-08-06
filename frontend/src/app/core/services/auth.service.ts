@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpService } from './http.service';
 import { BrowserStorageService } from './storage.service';
+import { UserSession } from '../models/session';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,13 @@ export class AuthService {
   }
 
   login(username: string, password: string): Observable<boolean> {
-    return this.http.post<{token: string}>('/users/login', {
+    return this.http.post<UserSession>('/users/login', {
       username,
       password
     }).pipe(
       map( response => {
-        this.storage.setUserSession({ username, token: response.token });
+        this.storage.setUserSession({ username: response.username, token: response.token });
         return true
-      }),
-      catchError(error => {
-        console.error('Login failed', error);
-        return of(false);
       })
     )
   }

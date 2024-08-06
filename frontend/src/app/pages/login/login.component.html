@@ -20,8 +20,8 @@
         <mat-checkbox color="primary" formControlName="rememberMe">Lembrar minha senha</mat-checkbox>
       </div>
       <footer class="login-footer">
-        <button id="register-btn" type="button" mat-button (click)="onRegister()">Criar Conta</button>
-        <button id="login-btn" mat-flat-button color="primary" type="submit"
+        <button id="register-btn" [disabled]="isLoading" type="button" mat-button (click)="onRegister()">Criar Conta</button>
+        <button id="login-btn" [disabled]="isLoading" mat-flat-button color="primary" type="submit"
           >Acessar</button>
       </footer>
     </form>

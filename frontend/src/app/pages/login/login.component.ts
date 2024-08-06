@@ -27,6 +27,7 @@ import { HttpClient, provideHttpClient } from '@angular/common/http';
 })
 export class LoginComponent {
   loginForm!: FormGroup
+  isLoading: boolean = false
 
   constructor(
     private fb: FormBuilder,
@@ -40,18 +41,26 @@ export class LoginComponent {
     });
   }
 
+  private handleLoginSuccess() {
+    this.isLoading = false;
+    this.router.navigate(['/main']);
+  }
+
   onLogin() {
 
     if (this.loginForm.valid) {
-      const { username, password, rememberMe } = this.loginForm.value;
+      const { username, password } = this.loginForm.value;
 
-      this.authService.login(username,password).subscribe(success => {
-        if (success) {
-          this.router.navigate(['/main']);
-        } else {
-          alert('Erro ao fazer login')
+      this.isLoading = true;
+      this.authService.login(username,password).subscribe({
+        next: this.handleLoginSuccess.bind(this),
+        error: (error) => {
+          this.isLoading = false;
+          alert("Erro ao fazer login: " + Object.values(error.error).join())
         }
-      })
+     });
+
+
     } else {
       this.loginForm.markAllAsTouched()
     }
