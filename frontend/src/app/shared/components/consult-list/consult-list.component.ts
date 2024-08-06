@@ -28,8 +28,8 @@ const CONSULTAS: Consulta[] = [
     MatIconModule,
     MatCardModule
   ],
-  templateUrl: './consult.list.component.html',
-  styleUrl: './consult.list.component.scss'
+  templateUrl: './consult-list.component.html',
+  styleUrl: './consult-list.component.scss'
 })
 export class ConsultListComponent {
   displayedColumns: string[] = ['especialidade', 'profissional', 'data', 'hora', 'acoes'];

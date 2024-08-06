@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { HeaderComponent } from '../../shared/components/header/header.component';
-import { ConsultListComponent } from '../../shared/components/consult.list/consult.list.component';
+import { ConsultListComponent } from '../../shared/components/consult-list/consult-list.component';
 
 @Component({
   selector: 'app-home',
