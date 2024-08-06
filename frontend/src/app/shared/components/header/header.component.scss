@@ -25,3 +25,9 @@ header{
   cursor: pointer;
   font-weight: 400;
 }
+
+@media (max-width: 575.98px) {
+  #label-name {
+    display: none;
+  }
+}
