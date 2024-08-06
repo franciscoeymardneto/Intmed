@@ -11,8 +11,6 @@ export class BrowserStorageService {
   set(key: string, value: string): void {
     if (this.isLocalStorageAvailable()) {
       localStorage.setItem(key, value);
-    } else {
-      console.warn('localStorage is not available');
     }
   }
 
@@ -20,7 +18,7 @@ export class BrowserStorageService {
     if (this.isLocalStorageAvailable()) {
       return localStorage.getItem(key);
     } else {
-      console.warn('localStorage is not available');
+
       return null;
     }
   }
@@ -28,8 +26,6 @@ export class BrowserStorageService {
   remove(key: string): void {
     if (this.isLocalStorageAvailable()) {
       localStorage.removeItem(key);
-    } else {
-      console.warn('localStorage is not available');
     }
   }
 }
