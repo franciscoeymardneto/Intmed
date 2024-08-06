@@ -18,12 +18,8 @@ export class ScheduleConsultModalBtnComponent {
 
   readonly dialog = inject(MatDialog);
 
-  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+  openDialog(): void {
     console.log('LALALALALAL')
-    this.dialog.open(ScheduleConsultModalComponent, {
-      width: '250px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
+    this.dialog.open(ScheduleConsultModalComponent);
   }
 }

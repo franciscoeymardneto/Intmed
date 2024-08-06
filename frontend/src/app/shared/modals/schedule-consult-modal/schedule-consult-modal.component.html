@@ -1,0 +1,51 @@
+
+  <h2 mat-dialog-title>Nova Consulta</h2>
+<mat-dialog-content class="dialog-content">
+  <form [formGroup]="newConsultForm" (ngSubmit)="onSubmit()">
+    <div class="fields-container">
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="speciality" placeholder="Especialidade" (selectionChange)="handleEnableNextSelect('doctor')" required>
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="newConsultForm.get('speciality')?.invalid && newConsultForm.get('speciality')?.touched">
+          Especialidade é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="doctor" placeholder="Médico" (selectionChange)="handleEnableNextSelect('date')"  required>
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="newConsultForm.get('doctor')?.invalid && newConsultForm.get('doctor')?.touched">
+          Médico é obrigatório
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="date" placeholder="Data" (selectionChange)="handleEnableNextSelect('hour')" required>
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="newConsultForm.get('date')?.invalid && newConsultForm.get('date')?.touched">
+          Data é obrigatória
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-select formControlName="hour" placeholder="Hora" required>
+          <mat-option value="one">First option</mat-option>
+          <mat-option value="two">Second option</mat-option>
+        </mat-select>
+        <mat-error *ngIf="newConsultForm.get('hour')?.invalid && newConsultForm.get('hour')?.touched">
+          Horário é obrigatório
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-flat-button [disabled]="!newConsultForm.get('hour')?.value">Confirmar</button>
+</mat-dialog-actions>
