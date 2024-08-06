@@ -1,3 +1,4 @@
+import hashlib
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
@@ -8,6 +9,17 @@ class UserLoginSerializer(serializers.Serializer):
 
 
 class UserLoginResponseSerializer(serializers.ModelSerializer):
+    token = serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = ["id", "username", "email", "password"]
+        fields = ["username", "token"]
+
+    def get_username(self, obj):
+        return obj.first_name
+    
+    def get_token(self, obj):
+        token_string = f'{obj.username}{obj.email}'
+        token_hash = hashlib.sha256(token_string.encode()).hexdigest()
+        return token_hash

@@ -34,7 +34,7 @@ def login(request):
 
         if user is not None:
             return Response(
-                {"user": UserLoginResponseSerializer(user).data},
+                UserLoginResponseSerializer(user).data,
                 status=status.HTTP_200_OK,
             )
         else:
