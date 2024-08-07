@@ -1,5 +1,6 @@
 from datetime import timedelta
 
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
@@ -52,3 +53,17 @@ class ScheduleModelTestSuit(TestCase):
         from ...models import Consult
         Consult.objects.create(schedule=schedule, hour=consult_time)
         self.assertIn(consult_time, schedule.ListConsultFromThisSchedule())
+
+    def test_no_save_schedule_with_past_date(self):
+        # Testa a validação de não poder criar uma agenda com uma data passada
+
+        with self.assertRaisesMessage(
+            ValidationError,
+            "Não é possível criar uma agenda para um dia passado."
+        ):
+            schedule = Schedule.objects.create(
+                doctor=self.doctor,
+                day=(self.currentTimezone - timedelta(days=1)).date(),
+                hours=self.hours
+            )
+            schedule.full_clean()
