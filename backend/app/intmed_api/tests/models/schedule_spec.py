@@ -67,3 +67,18 @@ class ScheduleModelTestSuit(TestCase):
                 hours=self.hours
             )
             schedule.full_clean()
+
+    def test_no_save_schedule_with_past_hour(self):
+        # Testa a validação de não poder criar uma agenda para hoje com
+        # um horário passado
+        hour = (self.currentTimezone - timedelta(hours=1)).time()
+        with self.assertRaisesMessage(
+            ValidationError,
+            f"Horário passado: {hour}. Não é possível adicionar horários que já passaram."
+        ):
+            schedule = Schedule.objects.create(
+                doctor=self.doctor,
+                day=self.currentTimezone .date(),
+                hours=[hour]
+            )
+            schedule.full_clean()
