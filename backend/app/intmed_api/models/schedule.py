@@ -18,7 +18,7 @@ class Schedule(models.Model):
         verbose_name="Médico"
     )
     day: date = models.DateField(verbose_name="Dia")
-    hours = ArrayField(models.TimeField(), verbose_name="Horários Disponíveis", default=list)
+    hours = ArrayField(models.TimeField(), verbose_name="Horários Disponíveis", default=list, blank=True)
 
     class Meta:
         unique_together = ("doctor", "day")
