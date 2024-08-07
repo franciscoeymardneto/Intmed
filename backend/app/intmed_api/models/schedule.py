@@ -10,17 +10,20 @@ from .doctor import Doctor
 class Schedule(models.Model):
     id: int = models.AutoField(primary_key=True)
     doctor = models.ForeignKey(
-        Doctor, on_delete=models.CASCADE, related_name="schedules", null=False
+        Doctor, on_delete=models.CASCADE, related_name="schedules", null=False, verbose_name="Médico"
     )
-    day: date = models.DateField()
+    day: date = models.DateField(verbose_name="Dia")
 
     class Meta:
         unique_together = ("doctor", "day")
+        verbose_name = "Agenda"
+        verbose_name_plural = "Agendas"
 
     def NoSaveScheduleWithPassDate(self):
-        if self.day < timezone.now().date():
+        if self.day < timezone.localtime(timezone.now()).date():
             raise ValidationError(
-                "Não é possível criar uma agenda para um dia passado."
+                f"Não é possível criar uma agenda para um dia passado. {timezone.localtime(timezone.now()).date()} -- {self.day}",
+                code="invalid"
             )
 
     def save(self, *args, **kwargs):
@@ -28,4 +31,4 @@ class Schedule(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
-        return f"{self.doctor.name} - {self.day}"
+        return f"{self.doctor.name} - {self.day.strftime("%d/%m/%Y")}"
