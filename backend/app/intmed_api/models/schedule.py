@@ -22,7 +22,7 @@ class Schedule(models.Model):
     def NoSaveScheduleWithPassDate(self):
         if self.day < timezone.localtime(timezone.now()).date():
             raise ValidationError(
-                f"Não é possível criar uma agenda para um dia passado. {timezone.localtime(timezone.now()).date()} -- {self.day}",
+                f"Não é possível criar uma agenda para um dia passado.",
                 code="invalid"
             )
 
