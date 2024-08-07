@@ -88,4 +88,21 @@ class CosultModelTestSuit(TestCase):
                 client=self.client
             )
             consult.full_clean()
-      
+    
+    def test_no_schedule_consult_with_no_hour_available(self):
+        # Testa a validação de não poder marcar consulta para um horário não
+        # disponivel na agenda
+        noAvailableHour = (self.currentTimezone + timedelta(hours=1)).time()
+    
+        past_schedule = Schedule(
+            doctor=self.doctor,
+            day=self.currentTimezone.date(),
+            hours=[self.currentTimezone.time()]
+        )
+        with self.assertRaisesMessage(ValidationError,"O horário da consulta não está disponível na agenda."):
+            consult = Consult(
+                schedule=past_schedule,
+                hour=noAvailableHour,
+                client=self.client
+            )
+            consult.full_clean()
