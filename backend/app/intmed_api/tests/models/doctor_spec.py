@@ -73,3 +73,14 @@ class DoctorModelTestSuit(TestCase):
         doctor = Doctor.objects.get(id=doctor.id)
 
         self.assertIsNone(doctor.speciality)
+
+    def test_blank_name_not_allowed(self):
+        # Testa que o campo nome não pode ser em branco
+        with self.assertRaises(ValidationError):
+            doctor = Doctor(
+                name="",
+                crm="01234567-9/GO",
+                email="dr.ava.thomas@example.com",
+                speciality=self.speciality,
+            )
+            doctor.full_clean()
