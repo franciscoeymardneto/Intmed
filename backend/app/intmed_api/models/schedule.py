@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.contrib.postgres.fields import ArrayField
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
@@ -13,6 +14,7 @@ class Schedule(models.Model):
         Doctor, on_delete=models.CASCADE, related_name="schedules", null=False, verbose_name="Médico"
     )
     day: date = models.DateField(verbose_name="Dia")
+    hours = ArrayField(models.TimeField(), verbose_name="Horários Disponíveis", default=list)
 
     class Meta:
         unique_together = ("doctor", "day")
@@ -23,11 +25,33 @@ class Schedule(models.Model):
         if self.day < timezone.localtime(timezone.now()).date():
             raise ValidationError(
                 f"Não é possível criar uma agenda para um dia passado.",
-                code="invalid"
+                code="invalid_day"
             )
 
-    def save(self, *args, **kwargs):
+    def NoSaveScheduleHoursWithPassHours(self):
+        current_time = timezone.localtime(timezone.now()).time()
+        current_day = timezone.localtime(timezone.now()).date()
+        unique_hours = set()
+        for hour in self.hours:
+            if hour in unique_hours:
+                raise ValidationError(
+                    f"Horário duplicado: {hour}. Não é possível adicionar horários iguais.",
+                    code="duplicate_hour"
+                )
+            if self.day == current_day and hour <= current_time:
+                raise ValidationError(
+                    f"Horário passado: {hour}. Não é possível adicionar horários que já passaram.",
+                    code="past_hour"
+                )
+            unique_hours.add(hour)
+
+    def clean(self):
         self.NoSaveScheduleWithPassDate()
+        self.NoSaveScheduleHoursWithPassHours()
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        self.hours.sort()
         super().save(*args, **kwargs)
 
     def __str__(self) -> str:
