@@ -47,3 +47,12 @@ class DoctorModelTestSuit(TestCase):
                 speciality=self.speciality,
             )
             doctor.full_clean()
+
+    def test_optional_speciality(self):
+        # Testa que o campo speciality é opcional
+        doctor = Doctor.objects.create(
+            name="Dr. Jane Doe",
+            crm="87654321-0/SP",
+            email="dr.jane.doe@example.com",
+        )
+        self.assertIsNone(doctor.speciality)
