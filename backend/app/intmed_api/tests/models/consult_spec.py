@@ -44,3 +44,14 @@ class CosultModelTestSuit(TestCase):
         self.assertEqual(consult.schedule, self.schedule)
         self.assertEqual(consult.hour, hour)
         self.assertEqual(consult.client, self.client)
+
+    def test_str_method(self):
+        # Testa o método __str__ do modelo
+        consult = Consult.objects.create(
+            schedule=self.schedule, hour=self.hours[0], client=self.client
+        )
+        self.assertEqual(
+            str(consult),
+            f"{self.schedule.__str__()} - {consult.hour.strftime("%H:%M")}"
+        )
+
