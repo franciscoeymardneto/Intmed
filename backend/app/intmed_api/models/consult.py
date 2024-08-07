@@ -34,16 +34,22 @@ class Consult(models.Model):
         self.schedule.hours.remove(self.hour)
         self.schedule.save(update_fields=['hours'])
 
-    def ReturnHourToScheduleWhenDeleteConsult(self):
+    def CanDeleteConsult(self):
         current_day = timezone.localtime(timezone.now()).date()
         current_hour = timezone.localtime(timezone.now()).time()
 
-        if self.schedule.day > current_day or (self.schedule.day == current_day and self.hour > current_hour):
-            self.schedule.hours.append(self.hour)
-            self.schedule.hours.sort()
-            self.schedule.save(update_fields=['hours'])
-        else:
+        if not (
+            self.schedule.day > current_day or
+            (
+                self.schedule.day == current_day and self.hour > current_hour
+            )
+        ):
             raise ValidationError('Não é possível desmarcar uma consulta que estava marcada para um horário passado.')
+
+    def ReturnHourToScheduleWhenDeleteConsult(self):
+        self.schedule.hours.append(self.hour)
+        self.schedule.hours.sort()
+        self.schedule.save(update_fields=['hours'])
 
     def clean(self):
         self.ValidateHourInSchedule()
@@ -60,6 +66,7 @@ class Consult(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
+        self.CanDeleteConsult()
         super().delete(*args, **kwargs)
         self.ReturnHourToScheduleWhenDeleteConsult()
 
