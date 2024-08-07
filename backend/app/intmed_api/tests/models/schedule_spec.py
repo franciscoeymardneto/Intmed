@@ -82,3 +82,17 @@ class ScheduleModelTestSuit(TestCase):
                 hours=[hour]
             )
             schedule.full_clean()
+
+    def test_no_save_schedule_with_duplicate_hours(self):
+        # Testa a validação de não poder criar uma agenda com horários duplicados
+        hour = (self.currentTimezone + timedelta(hours=1)).time()
+        with self.assertRaisesMessage(
+            ValidationError,
+            f"Horário duplicado: {hour}. Não é possível adicionar horários iguais."
+        ):
+            schedule = Schedule.objects.create(
+                doctor=self.doctor,
+                day=self.currentTimezone .date(),
+                hours=[hour,hour]
+            )
+            schedule.full_clean()
