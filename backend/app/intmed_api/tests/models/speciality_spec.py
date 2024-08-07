@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 
 from ...models import Speciality
@@ -13,3 +14,9 @@ class SpecialityModelTestSuit(TestCase):
         # Testa o método __str__ do modelo
         speciality = Speciality.objects.create(name="Pediatra")
         self.assertEqual(str(speciality), "Pediatra")
+
+    def test_blank_name_not_allowed(self):
+        # Testa que o campo nome não pode ser em branco
+        with self.assertRaises(ValidationError):
+            doctor = Speciality(name="")
+            doctor.full_clean()
