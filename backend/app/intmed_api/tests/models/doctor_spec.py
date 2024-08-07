@@ -19,3 +19,13 @@ class DoctorModelTestSuit(TestCase):
         self.assertEqual(doctor.crm, "12345678-9/CE")
         self.assertEqual(doctor.email, "dr.ed.richtofen@intmed.com")
         self.assertEqual(doctor.speciality, self.speciality)
+
+    def test_str_method(self):
+        # Testa o método __str__ do modelo
+        doctor = Doctor.objects.create(
+            name="Dr. Edward Richtofen",
+            crm="12345678-9/CE",
+            email="dr.ed.richtofen@intmed.com",
+            speciality=self.speciality,
+        )
+        self.assertEqual(str(doctor), "Dr. Edward Richtofen - 12345678-9/CE")
