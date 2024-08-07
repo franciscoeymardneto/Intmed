@@ -11,7 +11,11 @@ from .doctor import Doctor
 class Schedule(models.Model):
     id: int = models.AutoField(primary_key=True)
     doctor = models.ForeignKey(
-        Doctor, on_delete=models.CASCADE, related_name="schedules", null=False, verbose_name="Médico"
+        Doctor,
+        on_delete=models.CASCADE,
+        related_name="schedules",
+        null=False,
+        verbose_name="Médico"
     )
     day: date = models.DateField(verbose_name="Dia")
     hours = ArrayField(models.TimeField(), verbose_name="Horários Disponíveis", default=list)
@@ -21,10 +25,16 @@ class Schedule(models.Model):
         verbose_name = "Agenda"
         verbose_name_plural = "Agendas"
 
+    def ListConsultFromThisSchedule(self) -> set[str]:
+        # Importação tardia para evitar importação circular
+        from .consult import Consult
+
+        return set(Consult.objects.filter(schedule=self.id).values_list('hour', flat=True))
+
     def NoSaveScheduleWithPassDate(self):
         if self.day < timezone.localtime(timezone.now()).date():
             raise ValidationError(
-                f"Não é possível criar uma agenda para um dia passado.",
+                "Não é possível criar uma agenda para um dia passado.",
                 code="invalid_day"
             )
 
@@ -32,6 +42,8 @@ class Schedule(models.Model):
         current_time = timezone.localtime(timezone.now()).time()
         current_day = timezone.localtime(timezone.now()).date()
         unique_hours = set()
+        allocated_hours = self.ListConsultFromThisSchedule()
+
         for hour in self.hours:
             if hour in unique_hours:
                 raise ValidationError(
@@ -42,6 +54,12 @@ class Schedule(models.Model):
                 raise ValidationError(
                     f"Horário passado: {hour}. Não é possível adicionar horários que já passaram.",
                     code="past_hour"
+                )
+            if hour in allocated_hours:
+                raise ValidationError(
+                    f"Horário já alocado: {hour}. Não é possível adicionar horários que já estão " +
+                    "alocados nas consultas.",
+                    code="allocated_hour"
                 )
             unique_hours.add(hour)
 
