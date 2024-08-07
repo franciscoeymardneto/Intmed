@@ -72,3 +72,20 @@ class CosultModelTestSuit(TestCase):
             )
             consult.full_clean()
             
+    def test_no_schedule_consult_with_past_hour(self):
+        # Testa a validação de não poder marcar consulta para um horário passado
+        currentTimezone = (self.currentTimezone - timedelta(hours=1))
+    
+        past_schedule = Schedule(
+            doctor=self.doctor,
+            day=currentTimezone.date(),
+            hours=[currentTimezone.time()]
+        )
+        with self.assertRaisesMessage(ValidationError,"Não é possível agendar uma consulta para um horário passado."):
+            consult = Consult(
+                schedule=past_schedule,
+                hour=currentTimezone.time(),
+                client=self.client
+            )
+            consult.full_clean()
+      
