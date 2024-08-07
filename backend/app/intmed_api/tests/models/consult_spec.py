@@ -119,3 +119,15 @@ class CosultModelTestSuit(TestCase):
 
         self.schedule.refresh_from_db()
         self.assertNotIn(time, self.schedule.hours)
+
+    def test_return_hour_to_schedule_when_delete_consult(self):
+        # Testa se a hora da consulta é retornada à agenda ao deletar a consulta
+        time = self.schedule.hours[0]
+        consult = Consult.objects.create(
+            schedule=self.schedule,
+            hour=time,
+            client=self.client
+        )
+        consult.delete()
+        self.schedule.refresh_from_db()
+        self.assertIn(time, self.schedule.hours)

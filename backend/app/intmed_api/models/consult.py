@@ -60,8 +60,8 @@ class Consult(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        self.ReturnHourToScheduleWhenDeleteConsult()
         super().delete(*args, **kwargs)
+        self.ReturnHourToScheduleWhenDeleteConsult()
 
     def __str__(self) -> str:
         return f"{self.schedule.__str__()} - {self.hour.strftime("%H:%M")}"
