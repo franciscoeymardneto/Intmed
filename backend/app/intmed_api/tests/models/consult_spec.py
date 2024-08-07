@@ -131,3 +131,20 @@ class CosultModelTestSuit(TestCase):
         consult.delete()
         self.schedule.refresh_from_db()
         self.assertIn(time, self.schedule.hours)
+
+    def test_no_delete_consult_with_past_hour(self):
+        # Testa a validação de não poder desmarcar uma consulta de um horário passado
+        currentTimezone = (self.currentTimezone - timedelta(hours=1))
+
+        past_schedule = Schedule(
+            doctor=self.doctor,
+            day=currentTimezone.date(),
+            hours=[currentTimezone.time()]
+        )
+        with self.assertRaisesMessage(ValidationError,"'Não é possível desmarcar uma consulta que estava marcada para um horário passado"):
+            consult = Consult(
+                schedule=past_schedule,
+                hour=currentTimezone.time(),
+                client=self.client
+            )
+            consult.CanDeleteConsult()
