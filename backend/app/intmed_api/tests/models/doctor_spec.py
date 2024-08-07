@@ -56,3 +56,20 @@ class DoctorModelTestSuit(TestCase):
             email="dr.jane.doe@example.com",
         )
         self.assertIsNone(doctor.speciality)
+
+    def test_set_null_when_speciality_was_deleted(self):
+        # Testa que o campo speciality é setado null quando
+        # a especialidade é excluida
+        speciality = Speciality.objects.create(name="Neurologista")
+        doctor = Doctor.objects.create(
+            name="Dr. Emily Carter",
+            crm="23456789-1/RJ",
+            email="dr.emily.carter@example.com",
+            speciality=speciality,
+        )
+        self.assertEqual(doctor.speciality.name, "Neurologista")
+
+        speciality.delete()
+        doctor = Doctor.objects.get(id=doctor.id)
+
+        self.assertIsNone(doctor.speciality)
