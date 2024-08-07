@@ -78,7 +78,7 @@ class ScheduleModelTestSuit(TestCase):
         ):
             schedule = Schedule.objects.create(
                 doctor=self.doctor,
-                day=self.currentTimezone .date(),
+                day=self.currentTimezone.date(),
                 hours=[hour]
             )
             schedule.full_clean()
@@ -92,7 +92,28 @@ class ScheduleModelTestSuit(TestCase):
         ):
             schedule = Schedule.objects.create(
                 doctor=self.doctor,
-                day=self.currentTimezone .date(),
-                hours=[hour,hour]
+                day=self.currentTimezone.date(),
+                hours=[hour, hour]
             )
             schedule.full_clean()
+
+    def test_no_save_schedule_with_allocated_hours(self):
+        # Testa a validação de não poder adicionar à agenda um horário já marcado
+        hour = (self.currentTimezone + timedelta(hours=1)).time()
+
+        schedule = Schedule.objects.create(
+            doctor=self.doctor,
+            day=self.currentTimezone.date(),
+            hours=[hour]
+        )
+
+        from ...models import Consult
+        Consult.objects.create(schedule=schedule, hour=hour)
+
+        with self.assertRaisesMessage(
+            ValidationError,
+            f"Horário já alocado: {hour}. Não é possível adicionar horários que já estão " +
+            "alocados nas consultas."
+        ):
+            schedule.hours.append(hour)
+            schedule.save(updupdate_fields=['hours'])
