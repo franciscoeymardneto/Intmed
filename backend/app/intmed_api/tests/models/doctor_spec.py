@@ -36,14 +36,14 @@ class DoctorModelTestSuit(TestCase):
         Doctor.objects.create(
             name="Dr. Stephen Strange",
             crm="12345678-9/CE",
-            email="dr.stephen.strange@example.com",
+            email="dr.stephen.strange@intmed.com",
             speciality=self.speciality,
         )
         with self.assertRaises(ValidationError):
             doctor = Doctor(
                 name="Dra. Maria Oliveira",
                 crm="12345678-9/CE",
-                email="dr.maria.oliveira@example.com",
+                email="dr.maria.oliveira@intmed.com",
                 speciality=self.speciality,
             )
             doctor.full_clean()
@@ -53,7 +53,7 @@ class DoctorModelTestSuit(TestCase):
         doctor = Doctor.objects.create(
             name="Dr. Jane Doe",
             crm="87654321-0/SP",
-            email="dr.jane.doe@example.com",
+            email="dr.jane.doe@intmed.com",
         )
         self.assertIsNone(doctor.speciality)
 
@@ -64,7 +64,7 @@ class DoctorModelTestSuit(TestCase):
         doctor = Doctor.objects.create(
             name="Dr. Emily Carter",
             crm="23456789-1/RJ",
-            email="dr.emily.carter@example.com",
+            email="dr.emily.carter@intmed.com",
             speciality=speciality,
         )
         self.assertEqual(doctor.speciality.name, "Neurologista")
@@ -80,7 +80,18 @@ class DoctorModelTestSuit(TestCase):
             doctor = Doctor(
                 name="",
                 crm="01234567-9/GO",
-                email="dr.ava.thomas@example.com",
+                email="dr.ava.thomas@intmed.com",
+                speciality=self.speciality,
+            )
+            doctor.full_clean()
+
+    def test_blank_crm_not_allowed(self):
+        # Testa que o campo crm não pode ser em branco
+        with self.assertRaises(ValidationError):
+            doctor = Doctor(
+                name="Dr. Lucas Anderson",
+                crm="",
+                email="dr.lucas.anderson@intmed.com",
                 speciality=self.speciality,
             )
             doctor.full_clean()
