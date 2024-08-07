@@ -58,7 +58,7 @@ class CosultModelTestSuit(TestCase):
     def test_no_schedule_consult_with_past_day(self):
         # Testa a validação de não poder marcar consulta para um dia passado
         currentTimezone = (self.currentTimezone - timedelta(days=1))
-    
+
         past_schedule = Schedule(
             doctor=self.doctor,
             day=currentTimezone.date(),
@@ -71,11 +71,11 @@ class CosultModelTestSuit(TestCase):
                 client=self.client
             )
             consult.full_clean()
-            
+
     def test_no_schedule_consult_with_past_hour(self):
         # Testa a validação de não poder marcar consulta para um horário passado
         currentTimezone = (self.currentTimezone - timedelta(hours=1))
-    
+
         past_schedule = Schedule(
             doctor=self.doctor,
             day=currentTimezone.date(),
@@ -88,12 +88,12 @@ class CosultModelTestSuit(TestCase):
                 client=self.client
             )
             consult.full_clean()
-    
+
     def test_no_schedule_consult_with_no_hour_available(self):
         # Testa a validação de não poder marcar consulta para um horário não
         # disponivel na agenda
         noAvailableHour = (self.currentTimezone + timedelta(hours=1)).time()
-    
+
         past_schedule = Schedule(
             doctor=self.doctor,
             day=self.currentTimezone.date(),
@@ -106,3 +106,16 @@ class CosultModelTestSuit(TestCase):
                 client=self.client
             )
             consult.full_clean()
+
+    def test_remove_available_hour_from_schedule(self):
+        # Testa se a hora da consulta é removida da agenda ao salvar a consulta
+        time = self.schedule.hours[0]
+
+        Consult.objects.create(
+            schedule=self.schedule,
+            hour=time,
+            client=self.client
+        )
+
+        self.schedule.refresh_from_db()
+        self.assertNotIn(time, self.schedule.hours)
