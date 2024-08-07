@@ -1,7 +1,7 @@
 from datetime import timedelta
 
 from django.contrib.auth.models import User
-# from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
@@ -55,3 +55,20 @@ class CosultModelTestSuit(TestCase):
             f"{self.schedule.__str__()} - {consult.hour.strftime("%H:%M")}"
         )
 
+    def test_no_schedule_consult_with_past_day(self):
+        # Testa a validação de não poder marcar consulta para um dia passado
+        currentTimezone = (self.currentTimezone - timedelta(days=1))
+    
+        past_schedule = Schedule(
+            doctor=self.doctor,
+            day=currentTimezone.date(),
+            hours=[currentTimezone.time()]
+        )
+        with self.assertRaisesMessage(ValidationError,"Não é possível agendar uma consulta para um dia passado."):
+            consult = Consult(
+                schedule=past_schedule,
+                hour=currentTimezone.time(),
+                client=self.client
+            )
+            consult.full_clean()
+            
