@@ -148,3 +148,20 @@ class CosultModelTestSuit(TestCase):
                 client=self.client
             )
             consult.CanDeleteConsult()
+
+    def test_clean_method(self):
+        # Testa o método clean para garantir que as validações estão sendo aplicadas
+        hour = (self.currentTimezone + timedelta(days=1)).time()
+        schedule = Schedule.objects.create(
+            doctor=self.doctor,
+            day=(self.currentTimezone + timedelta(days=1)).date(),
+            hours=[hour]
+        )
+
+        consult = Consult(
+            schedule=schedule, hour=hour, client=self.client
+        )
+        try:
+            consult.clean()  # Deve passar sem exceções
+        except ValidationError:
+            self.fail("clean() raised ValidationError unexpectedly!")
