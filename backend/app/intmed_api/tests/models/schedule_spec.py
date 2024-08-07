@@ -117,3 +117,15 @@ class ScheduleModelTestSuit(TestCase):
         ):
             schedule.hours.append(hour)
             schedule.save(updupdate_fields=['hours'])
+
+    def test_clean_method(self):
+        # Testa o método clean para garantir que as validações estão sendo aplicadas
+        schedule = Schedule(
+            doctor=self.doctor,
+            day=self.currentTimezone.date(),
+            hours=self.hours
+        )
+        try:
+            schedule.clean()  # Deve passar sem exceções
+        except ValidationError:
+            self.fail("clean() raised ValidationError unexpectedly!")
