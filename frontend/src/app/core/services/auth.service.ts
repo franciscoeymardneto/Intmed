@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import {  map } from 'rxjs/operators';
 import { HttpService } from './http.service';
 import { BrowserStorageService } from './storage.service';
-import { UserSession } from '../models/session';
-import { ApiLoginResponse } from '../dto/api/login.response.dto';
+import { ApiLoginResponse } from '../dto/api/login.api.dto';
 
 @Injectable({
   providedIn: 'root'

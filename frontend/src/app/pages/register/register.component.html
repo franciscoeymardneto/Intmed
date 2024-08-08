@@ -32,8 +32,8 @@
         </mat-form-field>
       </div>
       <footer class="login-footer">
-        <button id="register-btn" type="button" mat-button (click)="onCancel()">Cancelar</button>
-        <button id="login-btn" mat-flat-button color="primary" type="submit"
+        <button id="register-btn" [disabled]="isLoading" type="button" mat-button (click)="onCancel()">Cancelar</button>
+        <button id="login-btn" [disabled]="isLoading" mat-flat-button color="primary" type="submit"
           >Confirmar</button>
       </footer>
     </form>
