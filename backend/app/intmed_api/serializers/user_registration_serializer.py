@@ -15,8 +15,16 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Senhas não conferem. Por favor digite senhas iguais."
             )
+        if not data.get("email"):
+            raise serializers.ValidationError(
+                "Email não fornecido, por favor forneça o email"
+            )
+        if not data.get("first_name"):
+            raise serializers.ValidationError(
+                "Nome do usuário não fornecido, por favor forneça o nome"
+            )
         return data
-    
+
     def create(self, validated_data):
         validated_data.pop("password2")
         user = User()
