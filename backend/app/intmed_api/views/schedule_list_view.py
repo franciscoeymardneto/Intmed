@@ -49,14 +49,12 @@ from ..serializers import ScheduleSerializer
 def list_schedules(request):
     now = timezone.localtime(timezone.now())
     today = now.date()
-    current_time = now.time()
-
     filters = {}
 
     try:
         filters = define_filters(request, filters)
     except ValidationError as error:
-        return Response(error, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"error": error.messages.pop()}, status=status.HTTP_400_BAD_REQUEST)
 
     queryset = Schedule.objects.filter(
         Q(day__gte=today),
