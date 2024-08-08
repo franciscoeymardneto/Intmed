@@ -4,7 +4,7 @@ import { map } from 'rxjs/operators';
 import { HttpService } from './http.service';
 import { BrowserStorageService } from './storage.service';
 import { Consult } from '../models/consult';
-import { ConsultApiResponse, ConsultApiResponseDTO } from '../dto/api/consult.api.dto';
+import { FetchConsultsApiResponse, ConsultApiResponseDTO, CreateConsultApi, CreateConsultApiResponse } from '../dto/api/consult.api.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +17,27 @@ export class ConsultService {
     let clientId = this.storage.getUserSession().userid
     return this.http.get<ConsultApiResponseDTO[]>(`/consultas?clientId=${clientId}`).pipe(
       map( response => {
-        return new ConsultApiResponse(response).consultas
+        return new FetchConsultsApiResponse(response).consultas
       })
     )
   }
 
   delete(consultId: number): Observable<void> {
     return this.http.delete(`/consultas/${consultId}`)
+  }
+
+  create(params: CreateConsultApi): Observable<Consult> {
+    let clientId = this.storage.getUserSession().userid
+
+    let body = {
+      ...params,
+      cliente_id: clientId
+    }
+
+    return this.http.post<ConsultApiResponseDTO>(`/consultas`,body).pipe(
+      map( response => {
+        return new CreateConsultApiResponse(response).consulta
+      })
+    )
   }
 }
