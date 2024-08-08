@@ -11,10 +11,7 @@ from ...models import Consult, Doctor, Schedule, Speciality
 class CosultModelTestSuit(TestCase):
     currentTimezone = timezone.localtime(timezone.now())
     hours = [
-        (currentTimezone + timedelta(minutes=1)).time(),
-        (currentTimezone + timedelta(hours=1)).time(),
-        (currentTimezone + timedelta(hours=2)).time(),
-        (currentTimezone + timedelta(hours=3)).time(),
+        (currentTimezone + timedelta(minutes=1)).time()
     ]
 
     def setUp(self):
@@ -47,12 +44,20 @@ class CosultModelTestSuit(TestCase):
 
     def test_str_method(self):
         # Testa o método __str__ do modelo
+
+        time = (self.currentTimezone + timedelta(minutes=1)).time()
+        schedule = Schedule.objects.create(
+            doctor=self.doctor,
+            day=(self.currentTimezone + timedelta(days=1)).date(),
+            hours=[time]
+        )
+
         consult = Consult.objects.create(
-            schedule=self.schedule, hour=self.hours[0], client=self.client
+            schedule=schedule, hour=time, client=self.client
         )
         self.assertEqual(
             str(consult),
-            f"{self.schedule.__str__()} - {consult.hour.strftime("%H:%M")}"
+            f"{schedule.__str__()} - {consult.hour.strftime("%H:%M")}"
         )
 
     def test_no_schedule_consult_with_past_day(self):
@@ -109,28 +114,38 @@ class CosultModelTestSuit(TestCase):
 
     def test_remove_available_hour_from_schedule(self):
         # Testa se a hora da consulta é removida da agenda ao salvar a consulta
-        time = self.schedule.hours[0]
-
+        time = (self.currentTimezone + timedelta(minutes=1)).time()
+        schedule = Schedule.objects.create(
+            doctor=self.doctor,
+            day=(self.currentTimezone + timedelta(days=1)).date(),
+            hours=[time]
+        )
         Consult.objects.create(
-            schedule=self.schedule,
+            schedule=schedule,
             hour=time,
             client=self.client
         )
 
-        self.schedule.refresh_from_db()
-        self.assertNotIn(time, self.schedule.hours)
+        schedule.refresh_from_db()
+        self.assertNotIn(time, schedule.hours)
 
     def test_return_hour_to_schedule_when_delete_consult(self):
         # Testa se a hora da consulta é retornada à agenda ao deletar a consulta
-        time = self.schedule.hours[0]
+        time = (self.currentTimezone + timedelta(minutes=1)).time()
+        schedule = Schedule.objects.create(
+            doctor=self.doctor,
+            day=(self.currentTimezone + timedelta(days=1)).date(),
+            hours=[time]
+        )
+
         consult = Consult.objects.create(
-            schedule=self.schedule,
+            schedule=schedule,
             hour=time,
             client=self.client
         )
         consult.delete()
-        self.schedule.refresh_from_db()
-        self.assertIn(time, self.schedule.hours)
+        schedule.refresh_from_db()
+        self.assertIn(time, schedule.hours)
 
     def test_no_delete_consult_with_past_hour(self):
         # Testa a validação de não poder desmarcar uma consulta de um horário passado

@@ -10,10 +10,7 @@ from ...models import Doctor, Schedule, Speciality
 class ScheduleModelTestSuit(TestCase):
     currentTimezone = timezone.localtime(timezone.now())
     hours = [
-        (currentTimezone + timedelta(minutes=1)).time(),
-        (currentTimezone + timedelta(hours=1)).time(),
-        (currentTimezone + timedelta(hours=2)).time(),
-        (currentTimezone + timedelta(hours=3)).time(),
+        (currentTimezone + timedelta(minutes=1)).time()
     ]
 
     def setUp(self):
