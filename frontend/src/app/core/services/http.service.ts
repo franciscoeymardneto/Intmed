@@ -20,4 +20,12 @@ export class HttpService {
       })
     )
   }
+
+  get<T>(path: string): Observable<T> {
+    return this.http.get<T>(`${this.baseUrl}${path}`, { headers: this.headers}).pipe(
+      map(response => {
+        return response
+      })
+    )
+  }
 }

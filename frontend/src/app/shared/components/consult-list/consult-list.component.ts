@@ -4,21 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import { ScheduleConsultModalBtnComponent } from '../schedule-consult-modal-btn/schedule-consult-modal-btn.component';
+import { Consult } from '../../../core/models/consult';
+import { ConsultService } from '../../../core/services/consult.service';
 
-
-export interface Consulta {
-  especialidade: string;
-  profissional: string;
-  data: string;
-  hora: string;
-}
-
-const CONSULTAS: Consulta[] = [
-  { especialidade: 'Cardiologia', profissional: 'Dr. Caio Carlos Ferreira', data: '01/01/2020', hora: '13:00' },
-  { especialidade: 'Cardiologia', profissional: 'Dr. Caio Carlos Ferreira', data: '01/01/2020', hora: '13:00' },
-  { especialidade: 'Cardiologia', profissional: 'Dr. Caio Carlos Ferreira', data: '01/01/2020', hora: '13:00' },
-  { especialidade: 'Cardiologia', profissional: 'Dr. Caio Carlos Ferreira', data: '01/01/2020', hora: '13:00' },
-];
 
 @Component({
   selector: 'app-consult',
@@ -35,9 +23,27 @@ const CONSULTAS: Consulta[] = [
 })
 export class ConsultListComponent {
   displayedColumns: string[] = ['especialidade', 'profissional', 'data', 'hora', 'acoes'];
-  dataSource = CONSULTAS;
+  dataSource: Consult[] = [];
+  isLoading= false;
 
-  desmarcar(element: Consulta) {
+  constructor(private consultService:ConsultService){
+
+  }
+  ngOnInit(): void {
+    this.isLoading= true;
+    this.consultService.list().subscribe({
+      next: (result) => {
+        this.isLoading= false;
+        this.dataSource = result
+      },
+      error: (error) => {
+        this.isLoading = false;
+        alert("Erro ao listar Consultas: " + Object.values(error.error).join())
+      }
+   })
+  }
+
+  desmarcar(element: Consult) {
     console.log('Desmarcar consulta:', element);
   }
 }
