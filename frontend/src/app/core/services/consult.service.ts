@@ -21,4 +21,8 @@ export class ConsultService {
       })
     )
   }
+
+  delete(consultId: number): Observable<void> {
+    return this.http.delete(`/consultas/${consultId}`)
+  }
 }
