@@ -1,10 +1,10 @@
-from django.urls import path
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework.decorators import api_view
 
 from .consult_list_view import list_consults
 from .create_consult_view import create_consult
+from .delete_consult_view import delete_consult
 
 
 @swagger_auto_schema(
