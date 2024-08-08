@@ -16,6 +16,8 @@ class Consult(models.Model):
         User, on_delete=models.CASCADE, related_name="user_consult", null=True, blank=True, verbose_name="Cliente"
     )
 
+    created_at = models.DateTimeField(auto_now_add=True)
+
     def NoScheduleConsultWithPastDayHour(self):
         current_day = timezone.localtime(timezone.now()).date()
         current_hour = timezone.localtime(timezone.now()).time()
