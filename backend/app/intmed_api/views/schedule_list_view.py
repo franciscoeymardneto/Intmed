@@ -54,7 +54,9 @@ def list_schedules(request):
     try:
         filters = define_filters(request, filters)
     except ValidationError as error:
-        return Response({"error": error.messages.pop()}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {"error": error.messages.pop()}, status=status.HTTP_400_BAD_REQUEST
+        )
 
     queryset = Schedule.objects.filter(
         Q(day__gte=today),
