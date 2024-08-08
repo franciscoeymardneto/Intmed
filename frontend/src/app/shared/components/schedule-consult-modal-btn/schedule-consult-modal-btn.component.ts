@@ -19,7 +19,6 @@ export class ScheduleConsultModalBtnComponent {
   readonly dialog = inject(MatDialog);
 
   openDialog(): void {
-    console.log('LALALALALAL')
     this.dialog.open(ScheduleConsultModalComponent);
   }
 }
