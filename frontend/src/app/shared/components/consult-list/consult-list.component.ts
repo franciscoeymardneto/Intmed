@@ -34,6 +34,11 @@ export class ConsultListComponent {
   }
   ngOnInit(): void {
     this.handleListConsults()
+    this.consultService.updateListObservable$.subscribe(data => {
+      if (data) {
+        this.handleListConsults()
+      }
+    })
   }
 
   desmarcar(element: Consult) {

@@ -15,7 +15,10 @@ export class SpecialityService {
   list(): Observable<Speciality[]> {
     return this.http.get<ApiSpecialityResponse[]>(`/especialidades`).pipe(
       map( response => {
-        return response
+        return response.map(spec => ({
+          id: spec.id,
+          name: spec.nome
+        }))
       })
     )
   }

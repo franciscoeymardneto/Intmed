@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpService } from './http.service';
 import { BrowserStorageService } from './storage.service';
@@ -10,6 +10,10 @@ import { FetchConsultsApiResponse, ConsultApiResponseDTO, CreateConsultApi, Crea
   providedIn: 'root'
 })
 export class ConsultService {
+  private updateListSubject = new Subject<boolean>();
+
+  updateListObservable$ = this.updateListSubject.asObservable();
+
   constructor(private http: HttpService, private storage: BrowserStorageService) {
   }
 
@@ -39,5 +43,9 @@ export class ConsultService {
         return new CreateConsultApiResponse(response).consulta
       })
     )
+  }
+
+  askToUpdateCOnsultList(value: boolean) {
+    this.updateListSubject.next(value);
   }
 }
