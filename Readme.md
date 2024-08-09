@@ -100,10 +100,25 @@ Entre na pasta /src/environments e atualize o arquivo environment.prod conforme 
 cd src/environments
 ```
 
-### 2. Levantar Containers
-Volte para a raiz da pasta frontend e execute o comando para iniciar os containers:
+### 2. Instalando dependencias
+Volte para a raiz da pasta frontend e execute o comando para instalar as dependências do projeto:
 
 ```bash
 cd ..
-docker compose up -d --build
+npm install
 ```
+
+### 3. Execute a aplicação
+Execute a aplicação para poder ter acesso ao sistema
+
+```bash
+npm start
+```
+### 4. Acessos
+
+- Acesse a aplicação através do endereço: http://localhost:4200/
+
+Agora basta só criar sua conta e testar a aplicação!!
+
+OBS: Lembre de popular o banco através do menu Admin do Django para que o frontend tenha o que
+consumir
