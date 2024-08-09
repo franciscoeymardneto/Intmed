@@ -49,7 +49,7 @@ Volte para a raiz da pasta backend e execute o comando para iniciar os container
 
 ```bash
 cd ..
-docker compose up -d
+docker compose up -d --build
 ```
 
 Espere até que o build seja concluído e todos os containers estejam em execução.
@@ -85,3 +85,25 @@ docker compose exec api python manage.py createsuperuser
 - Acesse a documentação Swagger dos endpoints através do endereço: http://localhost:8000/swagger
 
 ## Setup Frontend
+
+### 1. Clonar o repositório e atualizar arquivo de ambiente
+**Caso não tenha clonado antes**, Clone o repositório e navegue até a pasta `frontend`:
+
+```bash
+git clone <https://github.com/franciscoeymardneto/Intmed.git>
+cd frontend
+```
+
+Entre na pasta /src/environments e atualize o arquivo environment.prod conforme necessário:
+
+```bash
+cd src/environments
+```
+
+### 2. Levantar Containers
+Volte para a raiz da pasta frontend e execute o comando para iniciar os containers:
+
+```bash
+cd ..
+docker compose up -d --build
+```
