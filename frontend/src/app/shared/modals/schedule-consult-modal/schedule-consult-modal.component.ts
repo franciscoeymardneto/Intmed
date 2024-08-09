@@ -100,9 +100,9 @@ export class ScheduleConsultModalComponent {
         agenda_id: date,
         horario: hour
       }).subscribe({
-        next: (result) => {
+        next: () => {
           this.isLoading = false
-          this.consultService.askToUpdateCOnsultList(true)
+          this.consultService.askToUpdateConsultList(true)
           this.onNoClick()
         },
         error: (error) => {

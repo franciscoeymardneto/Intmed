@@ -45,7 +45,7 @@ export class ConsultService {
     )
   }
 
-  askToUpdateCOnsultList(value: boolean) {
+  askToUpdateConsultList(value: boolean) {
     this.updateListSubject.next(value);
   }
 }

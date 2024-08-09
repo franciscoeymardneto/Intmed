@@ -31,7 +31,7 @@ export class HttpService {
 
   delete(path: string): Observable<void> {
     return this.http.delete(`${this.baseUrl}${path}`, { headers: this.headers}).pipe(
-      map(response => {
+      map(() => {
         return
       })
     )

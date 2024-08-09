@@ -1,4 +1,4 @@
-.dialog-content{
+.dialog-content {
   .fields-container {
     display: flex;
     flex-direction: column;
@@ -8,6 +8,7 @@
 ::ng-deep .mdc-text-field--disabled {
   background-color: #F8F8F8;
 }
+
 button {
   width: 180px;
   border-radius: 8px;

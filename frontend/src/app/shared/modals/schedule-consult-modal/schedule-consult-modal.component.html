@@ -1,12 +1,12 @@
-
-  <h2 mat-dialog-title>Nova Consulta</h2>
+<h2 mat-dialog-title>Nova Consulta</h2>
 <mat-dialog-content class="dialog-content">
   <form [formGroup]="newConsultForm" (ngSubmit)="onSubmit()">
     <div class="fields-container">
       <mat-form-field appearance="outline">
-        <mat-select formControlName="speciality" placeholder="Especialidade" (selectionChange)="handleSelectSpeciality()" required>
+        <mat-select formControlName="speciality" placeholder="Especialidade"
+          (selectionChange)="handleSelectSpeciality()" required>
           @for (spec of specialities; track spec) {
-            <mat-option [value]="spec.id">{{spec.name}}</mat-option>
+          <mat-option [value]="spec.id">{{spec.name}}</mat-option>
           }
         </mat-select>
         <mat-error *ngIf="newConsultForm.get('speciality')?.invalid && newConsultForm.get('speciality')?.touched">
@@ -15,9 +15,9 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-select formControlName="doctor" placeholder="Médico" (selectionChange)="handleSelectDoctor()"  required>
+        <mat-select formControlName="doctor" placeholder="Médico" (selectionChange)="handleSelectDoctor()" required>
           @for (doc of doctors; track doc) {
-            <mat-option [value]="doc.id">{{doc.name}}</mat-option>
+          <mat-option [value]="doc.id">{{doc.name}}</mat-option>
           }
         </mat-select>
         <mat-error *ngIf="newConsultForm.get('doctor')?.invalid && newConsultForm.get('doctor')?.touched">
@@ -28,7 +28,7 @@
       <mat-form-field appearance="outline">
         <mat-select formControlName="date" placeholder="Data" (selectionChange)="handleSelectSchedule()" required>
           @for (sched of schedules; track sched) {
-            <mat-option [value]="sched.id">{{sched.name}}</mat-option>
+          <mat-option [value]="sched.id">{{sched.name}}</mat-option>
           }
         </mat-select>
         <mat-error *ngIf="newConsultForm.get('date')?.invalid && newConsultForm.get('date')?.touched">
@@ -39,7 +39,7 @@
       <mat-form-field appearance="outline">
         <mat-select formControlName="hour" placeholder="Hora" required>
           @for (hour of hours; track hour) {
-            <mat-option [value]="hour">{{hour}}</mat-option>
+          <mat-option [value]="hour">{{hour}}</mat-option>
           }
         </mat-select>
         <mat-error *ngIf="newConsultForm.get('hour')?.invalid && newConsultForm.get('hour')?.touched">
@@ -51,5 +51,6 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-flat-button (click)="onSubmit()" [disabled]="!newConsultForm.get('hour')?.value || isLoading">Confirmar</button>
+  <button mat-flat-button (click)="onSubmit()"
+    [disabled]="!newConsultForm.get('hour')?.value || isLoading">Confirmar</button>
 </mat-dialog-actions>

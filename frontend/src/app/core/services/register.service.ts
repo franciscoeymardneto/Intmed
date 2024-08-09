@@ -14,7 +14,7 @@ export class RegisterService {
 
   register(body: ApiRegisterRequest): Observable<boolean> {
     return this.http.post<ApiRegisterResponse>('/users', body).pipe(
-      map( response => {
+      map(() => {
         return true
       })
     )

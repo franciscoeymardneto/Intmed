@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 
 export interface DialogData {
-  dia: string;
+  day: string;
   doctor: string;
 }
 
@@ -23,13 +23,13 @@ export interface DialogData {
   styleUrl: './confirm-delete-consult.component.scss'
 })
 export class ConfirmDeleteConsultComponent {
-  dia = ''
+  day = ''
   doctor = ''
   readonly dialogRef = inject(MatDialogRef<ConsultListComponent>);
   readonly data = inject<DialogData>(MAT_DIALOG_DATA);
 
   ngOnInit(): void {
-    this.dia = this.data.dia
+    this.day = this.data.day
     this.doctor = this.data.doctor
   }
 

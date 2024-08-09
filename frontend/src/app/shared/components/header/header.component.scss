@@ -1,4 +1,4 @@
-header{
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -7,8 +7,10 @@ header{
 
     width: 100px;
   }
+
   div {
     display: flex;
+
     span {
       margin: 0 20px;
       font-size: 0.875rem;
@@ -20,7 +22,8 @@ header{
   color: #A8A8A8;
   font-weight: 400;
 }
-#label-logout{
+
+#label-logout {
   color: #49B4BB;
   cursor: pointer;
   font-weight: 400;

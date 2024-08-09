@@ -17,10 +17,10 @@ export type CreateConsultApi = {
 function parseConsultServerToApp(value: ConsultApiResponseDTO): Consult{
   return {
     id: value.id,
-    data: value.dia,
-    especialidade: value.medico.especialidade,
-    hora: value.horario,
-    profissional: value.medico.nome
+    date: value.dia,
+    speciality: value.medico.especialidade,
+    hour: value.horario,
+    doctor: value.medico.nome
   }
 }
 
