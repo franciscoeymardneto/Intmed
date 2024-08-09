@@ -26,8 +26,8 @@ Autor: Eymard Neto ( [linkedin](https://www.linkedin.com/in/eymard-neto-21625420
 Este guia irá ajudá-lo a configurar e executar a aplicação Medicar, tanto frontend quanto backend.
 Caso queira ver as aplicações separademente, clique nos links a seguir:
 
-- (Frontend)[https://github.com/franciscoeymardneto/intmed-front.git]
-- (Backend)[https://github.com/franciscoeymardneto/intmed-back.git]
+- [Frontend](https://github.com/franciscoeymardneto/intmed-front.git)
+- [Backend](https://github.com/franciscoeymardneto/intmed-back.git)
 
 ## Clonar o repositório e atualizar os submódulos
 Clone o repositório e atualize os submódulos com o seguintes comando:
