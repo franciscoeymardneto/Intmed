@@ -100,8 +100,16 @@ Entre na pasta frontend/src/environments e atualize o arquivo environment.prod c
 ```bash
 cd frontend/src/environments
 ```
+### 2.[Docker] Execute a aplicação usando Docker
+Caso você queira utilizar o Docker para executar a aplicação, volte para a raiz da pasta frontend execute os comando abaixo:
 
-### 2. Instalando dependencias
+```bash
+docker compose up --build
+```
+
+**OBS:** Caso opte por user o docker, lembre de modificar o arquivo environment.prod.ts
+
+### 2.[NPM] Instalando dependencias
 Volte para a raiz da pasta frontend e execute o comando para instalar as dependências do projeto:
 
 ```bash
