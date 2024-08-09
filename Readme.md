@@ -22,6 +22,11 @@ Autor: Eymard Neto ( [linkedin](https://www.linkedin.com/in/eymard-neto-21625420
 - Docker
 - Docker Compose
 
+# Setup
+
+- [Setup Backend](https://github.com/franciscoeymardneto/Intmed#setup-backend)
+- [Setup Frontend](https://github.com/franciscoeymardneto/Intmed#setup-frontend)
+
 ## Setup Backend
 Este guia irá ajudá-lo a configurar e executar a aplicação backend em um ambiente Docker.
 
@@ -78,3 +83,5 @@ docker compose exec api python manage.py createsuperuser
 
 - Acesse o painel de administração do Django através do endereço: http://localhost:8000/admin
 - Acesse a documentação Swagger dos endpoints através do endereço: http://localhost:8000/swagger
+
+## Setup Frontend
