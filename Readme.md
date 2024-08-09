@@ -4,6 +4,11 @@ Descrição: Teste prático
 
 Autor: Eymard Neto ( [linkedin](https://www.linkedin.com/in/eymard-neto-216254207) )
 
+# Demo na Nuvem
+- [Frontend](http://109.199.100.71:4000/)
+- [Backend Admin Painel](http://109.199.100.71:8000/admin)
+- [Backend Swagger](http://109.199.100.71:8000/swagger)
+
 # Tecnologias
 
 - Frontend
@@ -40,6 +45,16 @@ Agora você já tem tudo que precisa para prosseguir! Vamos aos setups individua
 
 - [Setup Backend](https://github.com/franciscoeymardneto/Intmed?tab=readme-ov-file#setup-backend)
 - [Setup Frontend](https://github.com/franciscoeymardneto/Intmed?tab=readme-ov-file#setup-frontend)
+
+## Setup Docker
+Caso não prefira subir as aplicações individualmente, você pode usar o `docker-compose.yml` que está na raiz do repositório, basta rodar o comando a seguir:
+
+```bash
+docker compose up -d --build
+```
+
+Após todos os containers subirem, execute as configurações de setup do backend e do frontend após a parte de subir o serviço, como as migrations, testes e criação do superusuário.
+
 
 ## Setup Backend
 Este guia irá ajudá-lo a configurar e executar a aplicação backend em um ambiente Docker.
