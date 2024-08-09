@@ -33,7 +33,7 @@ Caso queira ver as aplicações separademente, clique nos links a seguir:
 Clone o repositório e atualize os submódulos com o seguintes comando:
 
 ```bash
-git clone <https://github.com/franciscoeymardneto/Intmed.git>
+git clone https://github.com/franciscoeymardneto/Intmed.git
 git submodule update --init --recursive
 ```
 Agora você já tem tudo que precisa para prosseguir! Vamos aos setups individuais:
