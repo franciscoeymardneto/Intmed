@@ -23,6 +23,20 @@ Autor: Eymard Neto ( [linkedin](https://www.linkedin.com/in/eymard-neto-21625420
 - Docker Compose
 
 # Setup
+Este guia irá ajudá-lo a configurar e executar a aplicação Medicar, tanto frontend quanto backend.
+Caso queira ver as aplicações separademente, clique nos links a seguir:
+
+- (Frontend)[https://github.com/franciscoeymardneto/intmed-front.git]
+- (Backend)[https://github.com/franciscoeymardneto/intmed-back.git]
+
+## Clonar o repositório e atualizar os submódulos
+Clone o repositório e atualize os submódulos com o seguintes comando:
+
+```bash
+git clone <https://github.com/franciscoeymardneto/Intmed.git>
+git submodule update --init --recursive
+```
+Agora você já tem tudo que precisa para prosseguir! Vamos aos setups individuais:
 
 - [Setup Backend](https://github.com/franciscoeymardneto/Intmed?tab=readme-ov-file#setup-backend)
 - [Setup Frontend](https://github.com/franciscoeymardneto/Intmed?tab=readme-ov-file#setup-frontend)
@@ -30,18 +44,11 @@ Autor: Eymard Neto ( [linkedin](https://www.linkedin.com/in/eymard-neto-21625420
 ## Setup Backend
 Este guia irá ajudá-lo a configurar e executar a aplicação backend em um ambiente Docker.
 
-### 1. Clonar o repositório e atualizar arquivo de ambiente
-Clone o repositório e navegue até a pasta `backend`:
-
-```bash
-git clone <https://github.com/franciscoeymardneto/Intmed.git>
-cd backend
-```
+### 1. Atualizar arquivo de ambiente
 
 Entre na pasta *app* e atualize o arquivo .env conforme necessário:
-
 ```bash
-cd app
+cd backend/app
 ```
 
 ### 2. Levantar Containers
@@ -86,18 +93,12 @@ docker compose exec api python manage.py createsuperuser
 
 ## Setup Frontend
 
-### 1. Clonar o repositório e atualizar arquivo de ambiente
-**Caso não tenha clonado antes**, Clone o repositório e navegue até a pasta `frontend`:
+### 1. Atualizar arquivo de ambiente
+
+Entre na pasta frontend/src/environments e atualize o arquivo environment.prod conforme necessário:
 
 ```bash
-git clone <https://github.com/franciscoeymardneto/Intmed.git>
-cd frontend
-```
-
-Entre na pasta /src/environments e atualize o arquivo environment.prod conforme necessário:
-
-```bash
-cd src/environments
+cd frontend/src/environments
 ```
 
 ### 2. Instalando dependencias
