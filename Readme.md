@@ -24,8 +24,8 @@ Autor: Eymard Neto ( [linkedin](https://www.linkedin.com/in/eymard-neto-21625420
 
 # Setup
 
-- [Setup Backend](https://github.com/franciscoeymardneto/Intmed#setup-backend)
-- [Setup Frontend](https://github.com/franciscoeymardneto/Intmed#setup-frontend)
+- [Setup Backend](https://github.com/franciscoeymardneto/Intmed?tab=readme-ov-file#setup-backend)
+- [Setup Frontend](https://github.com/franciscoeymardneto/Intmed?tab=readme-ov-file#setup-frontend)
 
 ## Setup Backend
 Este guia irá ajudá-lo a configurar e executar a aplicação backend em um ambiente Docker.
